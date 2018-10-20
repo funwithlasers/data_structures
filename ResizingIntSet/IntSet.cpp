@@ -78,31 +78,31 @@ using namespace std;
 
 void IntSet::resize(int new_capacity)
 {
-	if(new_capacity < used)
-		new_capacity = used;
-	if(new_capacity < 1)
-		new_capacity = 1;
-	capacity = new_capacity;
-	int *new_data = new int[capacity];
-	for(int i = 0; i < used; i++)
-		new_data[i] = data[i];
-	delete [] data;
-	data = new_data;
+   if(new_capacity < used)
+      new_capacity = used;
+   if(new_capacity < 1)
+      new_capacity = 1;
+   capacity = new_capacity;
+   int *new_data = new int[capacity];
+   for(int i = 0; i < used; i++)
+      new_data[i] = data[i];
+   delete [] data;
+   data = new_data;
 }
 
 IntSet::IntSet(int initial_capacity) : capacity(initial_capacity), used(0)
 {
-	if(capacity < 1)
-		capacity = DEFAULT_CAPACITY;
-	data = new int[capacity];
+   if(capacity < 1)
+      capacity = DEFAULT_CAPACITY;
+   data = new int[capacity];
 }
 
 IntSet::IntSet(const IntSet& src)
 	: capacity(src.capacity), used(src.used)
 {
-	data = new int[capacity];
-	for(int i = 0; i < used; i++)
-		data[i] = src.data[i];
+   data = new int[capacity];
+   for(int i = 0; i < used; i++)
+      data[i] = src.data[i];
 }
 
 IntSet::~IntSet()
@@ -113,41 +113,40 @@ IntSet::~IntSet()
 IntSet& IntSet::operator=(const IntSet& rhs)
 {
    if(this != &rhs)
-	{
-		int* new_data = new int[rhs.capacity];
-		for(int i = 0; i < rhs.used; i++)
-			new_data[i] = rhs.data[i];
-		delete [] data;
-		data = new_data;
-		capacity = rhs.capacity;
-		used = rhs.used;
-	}
-	return *this;
+   {
+      int* new_data = new int[rhs.capacity];
+      for(int i = 0; i < rhs.used; i++)
+         new_data[i] = rhs.data[i];
+      delete [] data;
+      data = new_data;
+      capacity = rhs.capacity;
+      used = rhs.used;
+   }
+   return *this;
 }
 
 int IntSet::size() const {	return used; }
 
 bool IntSet::isEmpty() const
 {
-	if(used == 0)
-		return true;
-	return false;
+   if(used == 0)
+      return true;
+   return false;
 }
 
 bool IntSet::contains(int anInt) const
 {
-	for(int i = 0; i < used; i++)
-		if(data[i] == anInt)	return true;
+   for(int i = 0; i < used; i++)
+      if(data[i] == anInt)	return true;
    return false;
 }
 
 bool IntSet::isSubsetOf(const IntSet& otherIntSet) const
 {
-	if( isEmpty() ) return true;
-	for(int i = 0; i < used; i++)
-		if( !otherIntSet.contains(data[i]) ) return false;
-	return true;
-
+   if( isEmpty() ) return true;
+   for(int i = 0; i < used; i++)
+      if( !otherIntSet.contains(data[i]) ) return false;
+   return true;
 }
 
 void IntSet::DumpData(ostream& out) const
@@ -162,66 +161,66 @@ void IntSet::DumpData(ostream& out) const
 
 IntSet IntSet::unionWith(const IntSet& otherIntSet) const
 {
-	IntSet temp = IntSet(1.5 * (used + (otherIntSet.subtract(*this).size())) +1);
-	for(int i = 0; i < used; i++)
-		temp.add(data[i]);
-	for(int i = 0; i < otherIntSet.used; i++)
-		temp.add(otherIntSet.data[i]);
-	return temp;
+   IntSet temp = IntSet(1.5 * (used + (otherIntSet.subtract(*this).size())) +1);
+   for(int i = 0; i < used; i++)
+      temp.add(data[i]);
+   for(int i = 0; i < otherIntSet.used; i++)
+      temp.add(otherIntSet.data[i]);
+   return temp;
 }
 
 IntSet IntSet::intersect(const IntSet& otherIntSet) const
 {
-	IntSet temp = IntSet(used);
-	for(int i = 0; i < otherIntSet.used; i++)
-	{
-		if(contains(otherIntSet.data[i]))
-			temp.add(otherIntSet.data[i]);
-	}
-	return temp;
+   IntSet temp = IntSet(used);
+   for(int i = 0; i < otherIntSet.used; i++)
+   {
+      if(contains(otherIntSet.data[i]))
+         temp.add(otherIntSet.data[i]);
+   }
+   return temp;
 }
 
 IntSet IntSet::subtract(const IntSet& otherIntSet) const
 {
-	IntSet temp = *this;
-	for(int i = 0; i < otherIntSet.size(); i++)
-		temp.remove(otherIntSet.data[i]);
-	return temp;
+   IntSet temp = *this;
+   for(int i = 0; i < otherIntSet.size(); i++)
+	  temp.remove(otherIntSet.data[i]);
+   return temp;
 }
 
 void IntSet::reset()
 {
-	used = 0;
+   used = 0;
 }
 
 bool IntSet::add(int anInt)
 {
-	if(contains(anInt)) return false;
-	if(used == capacity) resize((int)(capacity * 1.5) + 1);
-	data[used++] = anInt;
-	return true;
+   if(contains(anInt)) return false;
+   if(used == capacity) resize((int)(capacity * 1.5) + 1);
+   data[used++] = anInt;
+   return true;
 }
 
 bool IntSet::remove(int anInt)
 {
-	if(!contains(anInt)) return false;
-	for(int i = 0; i < used; i++)
-	{
-		if(data[i] == anInt)
-		{
-			for(int j = i; j < used-1; j++)
-				data[j] = data[j+1];
-			used--;
-			break;
-		}
-	}
-	return true;
+   if(!contains(anInt)) return false;
+   for(int i = 0; i < used; i++)
+   {
+      if(data[i] == anInt)
+      {
+         for(int j = i; j < used-1; j++)
+            data[j] = data[j+1];
+         used--;
+         break;
+      }
+   }
+   return true;
 }
 
 bool operator==(const IntSet& is1, const IntSet& is2)
 {
-	if(is1.size() != is2.size()) return false;
-	if(is1.subtract(is2).size() == 0
-		&& is2.subtract(is1).size() == 0) return true;
-	return false;
+   if(is1.size() != is2.size()) return false;
+   if(is1.subtract(is2).size() == 0
+   	&& is2.subtract(is1).size() == 0) return true;
+   return false;
 }
