@@ -161,7 +161,7 @@ void IntSet::DumpData(ostream& out) const
 
 IntSet IntSet::unionWith(const IntSet& otherIntSet) const
 {
-   IntSet temp = IntSet(1.5 * (used + (otherIntSet.subtract(*this).size())) +1);
+   IntSet temp = IntSet(used + (otherIntSet.subtract(*this).size()));
    for(int i = 0; i < used; i++)
       temp.add(data[i]);
    for(int i = 0; i < otherIntSet.used; i++)
