@@ -51,7 +51,7 @@ IntSet::IntSet()
    //the private array of ints 'data' is initialized to size equal to 'IntSet::MAX_SIZE'.
    //used represents the number of relevant ints in the IntSet; this is set to 0
 
-   data[IntSet::MAX_SIZE];
+   data[IntSet::MAX_SIZE] = {0};
    used = 0;
 
 }
@@ -180,7 +180,10 @@ bool IntSet::add(int anInt)
    //is incremented, and true is returned.
 
    if(size() >= IntSet::MAX_SIZE || contains(anInt))
+   {
+      cout << "failed to add element to IntSet";
       return false;
+   }
    data[size()] = anInt;
    used++;
    return true;
