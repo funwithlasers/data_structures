@@ -196,7 +196,7 @@ void IntSet::reset()
 bool IntSet::add(int anInt)
 {
    if(contains(anInt)) return false;
-   if(used == capacity) resize((int)(capacity * 1.5) + 1);
+   if(used == capacity) resize((capacity * 1.5) + 1);
    data[used++] = anInt;
    return true;
 }
